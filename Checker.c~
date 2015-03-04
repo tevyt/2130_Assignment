@@ -51,15 +51,13 @@ int main(int argc , char *argv[]){
 					}
 					N = N-1;
 				}
-				printf("Word: %s not found , did you mean?\n", word);
 				for(i = 0; i < sCount; i++){
-					
+					printf("Word: %s not found , did you mean?\n", word);
 					printf("%d. %s\n" , (i+1) , suggestions[i]);
-					
+					printf("Enter digit beside chosen replacement text: ");
+					scanf("%d" , &option);
+					fprintf(outputPointer , "%s " , suggestions[option-1]);
 				}
-				printf("Enter digit beside chosen replacement text: ");
-				scanf("%d" , &option);
-				fprintf(outputPointer , "%s " , suggestions[option-1]);
 			}
 		}
     }
