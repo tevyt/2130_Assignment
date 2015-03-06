@@ -2,20 +2,23 @@
 #include<stdlib.h>
 #include<string.h>
 #include<ctype.h>
-#define REQUIRED_NUMBER_OF_ARGUMENTS 3
-#define DICTIONARY_SIZE 45427
-#define KEY_NOT_FOUND -1
+#define REQUIRED_NUMBER_OF_ARGUMENTS 3 //Number of arguments needed for operation
+#define DICTIONARY_SIZE 45427//Number of words in the dictionary
+#define KEY_NOT_FOUND -1//Return value for absent key
 
 char *upper(char *string);
 int binarySearch(char dictionary[][100] , int min , int max, char *key);
 int main(int argc , char *argv[]){
-	FILE *dictPointer , *inputPointer , *outputPointer;
-	const char *dictFileName = "linux.words";
+	FILE *dictPointer , *inputPointer , *outputPointer;//3 pointers for 3 files to open
+	const char *dictFileName = "linux.words";//Dictionary file name
 	char dictionary[DICTIONARY_SIZE][100], word[100] , buffer[100] , suggestions[10][100];
 	int i, N, sCount, option;
+    
+    //Check for required number of arguments
 	if(argc != 3)
 		printf("Error\nCorrect Usage: checker input output\n");
 	else{
+        //Checks for file opening
 		if((dictPointer = fopen(dictFileName, "r")) == NULL){
 			printf("Dictionary not found.\n");
 			exit(0);
@@ -29,11 +32,13 @@ int main(int argc , char *argv[]){
 			exit(0);
 		}
 		i = 0;
+        //Read dictionary into memory
 		while(fscanf(dictPointer , "%s" , dictionary[i]) != EOF)
 			i++;
 		fclose(dictPointer);
+
 		while(fscanf(inputPointer , "%s" , word) != EOF){
-			memset(suggestions , '\0' , sizeof(suggestions[0][0]) * 10 * 100);
+			memset(suggestions , '\0' , sizeof(suggestions[0][0]) * 10 * 100);//Set all contents of suggestions to '\0'
 			sCount = 0;
 			N = strlen(word) - 1;
 			
@@ -73,7 +78,7 @@ int main(int argc , char *argv[]){
 	return 0;
 }
 
-
+//Binary Search implemented to search the dictionay
 int binarySearch(char dictionary[][100] , int min , int max, char *key){
 	int mid;
 	if(min > max)
@@ -87,13 +92,14 @@ int binarySearch(char dictionary[][100] , int min , int max, char *key){
 		return  binarySearch(dictionary, mid+1 , max, key);
 }
 
+//Takes a string returns the upper case version of that string.
 char *upper(char *string){
 	int i;
-	char *g_buffer = malloc(strlen(string));
+	char *g_buffer = malloc(strlen(string));//Create a string the same size as argument
 	for(i = 0; i < strlen(string); i++){
-		g_buffer[i] = toupper(string[i]);
+		g_buffer[i] = toupper(string[i]);//Store the upper case version of each char
 	}
-	g_buffer[i] = '\0';
+	g_buffer[i] = '\0';//Terminate string
 	return g_buffer;
 }
 	
