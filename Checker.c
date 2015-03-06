@@ -7,6 +7,7 @@
 #define KEY_NOT_FOUND -1
 
 char *upper(char *string);
+int binarySearch(char dictionary[][100] , int min , int max, char *key);
 int main(int argc , char *argv[]){
 	FILE *dictPointer , *inputPointer , *outputPointer;
 	const char *dictFileName = "linux.words";
@@ -51,20 +52,27 @@ int main(int argc , char *argv[]){
 					}
 					N = N-1;
 				}
-				printf("Word: %s not found , did you mean?\n", word);
-				for(i = 0; i < sCount; i++){
+                if(sCount == 0){
+                    printf("No suggestions for %s\n" , word);
+                    fprintf(outputPointer , "%s ", word);
+                }
+                else{
+				    printf("Word: %s not found , did you mean?\n", word);
+				    for(i = 0; i < sCount; i++){
 					
-					printf("%d. %s\n" , (i+1) , suggestions[i]);
+					    printf("%d. %s\n" , (i+1) , suggestions[i]);
 					
-				}
-				printf("Enter digit beside chosen replacement text: ");
-				scanf("%d" , &option);
-				fprintf(outputPointer , "%s " , suggestions[option-1]);
-			}
+				    }
+				    printf("Enter digit beside chosen replacement text: ");
+				    scanf("%d" , &option);
+				    fprintf(outputPointer , "%s " , suggestions[option-1]);
+			    }
 		}
     }
+   }
 	return 0;
 }
+
 
 int binarySearch(char dictionary[][100] , int min , int max, char *key){
 	int mid;
